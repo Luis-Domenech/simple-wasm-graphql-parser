@@ -13,17 +13,17 @@ const loadWasmInNodeJS = async () => {
 
     const data = parse_schema_for_typescript(raw_schema) as SchemaData
 
-    Object.keys(data).map(d => console.log(d))
-
-    // Horrible test here
-    if (data.directives.length > 0 && 
-        data.enum_types.length > 0 && 
-        data.input_object_types.length > 0 && 
-        data.interface_types.length > 0 && 
-        data.object_types.length > 0 && 
-        data.scalar_types.length > 0 &&
-        data.union_types.length > 0) console.log("WASM GraphQL Parser is working")
-    else console.error("WASM GraphQL Parser is NOT working"); process.exit(1)
+    if (data.directives && 
+        data.enum_types && 
+        data.input_object_types && 
+        data.interface_types && 
+        data.object_types && 
+        data.scalar_types &&
+        data.union_types) console.log("WASM GraphQL Parser is working")
+    else {
+      console.error("WASM GraphQL Parser is NOT working")
+      process.exit(1)
+    }
   }
   catch(e) {
     console.log(e)

@@ -48,12 +48,8 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-      - name: Setup
-        working-directory: ./src
-        run: yarn compile-prod
       - name: Publish 🚀
-        working-directory: ./packages/wasm-graphql-parser
-        run: npx semantic-release
+        run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

@@ -17,11 +17,9 @@
     "compile-prod-bundler": "rimraf ../packages/wasm-graphql-parser && wasm-pack build --target bundler --out-dir ../packages/wasm-graphql-parser --release --scope luis-domenech -- --offline && yarn cp-types",
     "compile-prod-web": "rimraf ../packages/wasm-graphql-parser && wasm-pack build --target web --out-dir ../packages/wasm-graphql-parser --release --scope luis-domenech -- --offline && yarn cp-types",
     "compile-prod": "yarn && yarn compile-prod-node",
-    "publish": "yarn && yarn login && yarn compile-prod && cd ../wasm-graphql-parser && yarn publish --access=public"
+    "publish": "yarn && yarn login && yarn compile-prod && cd ../wasm-graphql-parser && wasm-pack publish --access=public"
   },
-  "dependencies": {
-    "rimraf": "^3.0.2"
-  },
+  "dependencies": {},
   "author": "Luis F. Domenech Ortiz <luisfabiandomenech@gmail.com>",
   "homepage": "https://github.com/Luis-Domenech/wasm-graphql-parser",
   "repository": {
@@ -38,8 +36,6 @@
     "typescript"
   ],
   "devDependencies": {
-    "@semantic-release/changelog": "^6.0.1",
-    "@semantic-release/git": "^10.0.1",
-    "semantic-release": "^19.0.3"
+    "rimraf": "^3.0.2"
   }
 }
