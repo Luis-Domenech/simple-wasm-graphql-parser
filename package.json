@@ -1,8 +1,7 @@
 {
   "private": true,
   "workspaces": [
-    "packages/*",
-    "tests/*"
+    "packages/*"
   ],
   "devDependencies": {
     "@commitlint/cli": "16.2.3",
