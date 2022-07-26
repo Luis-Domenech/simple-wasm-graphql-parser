@@ -1,3 +1,3 @@
 {
-    "rust-analyzer.linkedProjects": ["./src/Cargo.toml"],
+    "rust-analyzer.linkedProjects": ["./wasm-graphql-parser-src/Cargo.toml"],
 }

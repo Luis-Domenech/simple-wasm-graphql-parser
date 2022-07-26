@@ -3,6 +3,9 @@ name = "wasm-graphql-parser"
 version = "0.1.0"
 authors = ["Luis-Domenech <luisfabiandomenech@gmail.com>"]
 edition = "2018"
+description = "A very basic GraphQL parser that uses Apollo's parser as a start and some custom logic to extract all data from a schema. The package in npm was built and published using wasm-pack."
+repository = "https://github.com/Luis-Domenech/wasm-graphql-parser"
+license = "MIT"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -19,8 +22,6 @@ wasm-opt = ["-Oz", "--enable-mutable-globals"]
 [dependencies]
 wasm-bindgen = { version = "0.2.81", features = ["serde-serialize"] }
 tramp = "0.3.0" #Used for recursion
-num-traits = "0.2.15" #Numeric traits for generic mathematics in Rust.
-num-bigint = "0.4.3"
 apollo-parser = "0.2.8"
 serde = { version = "1.0.139", features = ["derive"]}
 serde_derive = "1.0.139"
