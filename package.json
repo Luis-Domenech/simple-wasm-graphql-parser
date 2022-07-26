@@ -10,7 +10,7 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "test–pkg": "cd wasm-graphql-parser-src && yarn compile-dev && cd ../packages/backend-test && yarn test-pkg",
-    "publish-pkg": "cd wasm-graphql-parser-src && yarn publish-pkg"
+    "test": "cd wasm-graphql-parser-src && yarn compile-dev && cd ../packages/backend-test && yarn test",
+    "deploy": "cd wasm-graphql-parser-src && yarn deploy"
   }
 }
