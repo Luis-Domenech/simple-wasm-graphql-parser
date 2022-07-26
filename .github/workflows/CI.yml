@@ -22,13 +22,14 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Use wasm-pack
+        uses: jetli/wasm-pack-action@v0.3.0
+        with:
+          version: 'latest'
       - uses: actions/cache@v2
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-      - uses: jetli/wasm-pack-action@v0.3.0
-        with:
-          version: 'latest'
       - name: Run Tests 🧪
         run: yarn test
   Publish:
@@ -43,12 +44,14 @@ jobs:
         with:
           node-version: 16.x
           registry-url: https://registry.npmjs.org
+      - name: Use wasm-pack
+        uses: jetli/wasm-pack-action@v0.3.0
+        with:
+          version: 'latest'
       - uses: actions/cache@v2
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
       - name: Publish 🚀
         run: yarn publish
         env:
