@@ -1,0 +1,45 @@
+{
+  "name": "wasm-graphql-parser",
+  "description": "Just a basic graphql parser that uses Apollo's rust parser and custom logic to extract all info from a schema",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "cp-types": "cat ./typescript-types.ts >> ../packages/wasm-graphql-parser/wasm_graphql_parser.d.ts",
+    "test": "cargo test",
+    "check": "cargo check",
+    "build": "cargo build",
+    "login": "wasm-pack login",
+    "compile-dev-node": "rimraf ../packages/wasm-graphql-parser && wasm-pack build --target nodejs --out-dir ../packages/wasm-graphql-parser -- --offline && yarn cp-types",
+    "compile-dev-bundler": "rimraf ../packages/wasm-graphql-parser && wasm-pack build --target bundler --out-dir ../packages/wasm-graphql-parser -- --offline && yarn cp-types",
+    "compile-dev-web": "rimraf ../packages/wasm-graphql-parser && wasm-pack build --target web --out-dir ../packages/wasm-graphql-parser -- --offline && yarn cp-types",
+    "compile-dev": "yarn && yarn compile-dev-node",
+    "compile-prod-node": "rimraf ../packages/wasm-graphql-parser && wasm-pack build --target nodejs --out-dir ../packages/wasm-graphql-parser --release --scope luis-domenech -- --offline && yarn cp-types",
+    "compile-prod-bundler": "rimraf ../packages/wasm-graphql-parser && wasm-pack build --target bundler --out-dir ../packages/wasm-graphql-parser --release --scope luis-domenech -- --offline && yarn cp-types",
+    "compile-prod-web": "rimraf ../packages/wasm-graphql-parser && wasm-pack build --target web --out-dir ../packages/wasm-graphql-parser --release --scope luis-domenech -- --offline && yarn cp-types",
+    "compile-prod": "yarn && yarn compile-prod-node",
+    "publish": "yarn && yarn login && yarn compile-prod && cd ../wasm-graphql-parser && yarn publish --access=public"
+  },
+  "dependencies": {
+    "rimraf": "^3.0.2"
+  },
+  "author": "Luis F. Domenech Ortiz <luisfabiandomenech@gmail.com>",
+  "homepage": "https://github.com/Luis-Domenech/wasm-graphql-parser",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Luis-Domenech/wasm-graphql-parser"
+  },
+  "keywords": [
+    "rust",
+    "web assembly",
+    "wasm",
+    "graphql",
+    "parser",
+    "schema",
+    "typescript"
+  ],
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "semantic-release": "^19.0.3"
+  }
+}

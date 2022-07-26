@@ -1,0 +1,173 @@
+"""
+Text
+"""
+
+# Default directives for Schema Stitching
+directive @merge(
+  keyField: String
+  keyArg: String
+  additionalArgs: String
+  key: [String!]
+  argsExpr: String
+) on FIELD_DEFINITION
+directive @key(selectionSet: String!) on OBJECT
+directive @computed(selectionSet: String!) on FIELD_DEFINITION
+directive @canonical on OBJECT | INTERFACE | INPUT_OBJECT | UNION | ENUM | SCALAR | FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+
+
+# Scalars, Enums, Unions and Directives required for Apollo Federation
+scalar _Any
+scalar FieldSet
+scalar link__Import
+union _Entity
+enum link__Purpose {
+  """
+  `SECURITY` features provide metadata necessary to securely resolve fields.
+  """
+  SECURITY
+
+  """
+  `EXECUTION` features provide metadata necessary for operation execution.
+  """
+  EXECUTION
+}
+type _Service {
+  sdl: String
+}
+extend type Query {
+  _entities(representations: [_Any!]!): [_Entity]!
+  _service: _Service!
+}
+directive @external on FIELD_DEFINITION
+directive @requires(fields: FieldSet!) on FIELD_DEFINITION
+directive @provides(fields: FieldSet!) on FIELD_DEFINITION
+directive @key(fields: FieldSet!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
+directive @link(url: String, as: String, for: link__Purpose, import: [link__Import]) repeatable on SCHEMA
+directive @shareable on OBJECT | FIELD_DEFINITION
+directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+directive @override(from: String!) on FIELD_DEFINITION
+directive @extends on OBJECT | INTERFACE
+
+
+# Example Directives
+directive @auth(role : String!) on FIELD_DEFINITION
+directive @uppercase on FIELD_DEFINITION
+directive @lowercase on FIELD_DEFINITION
+directive @mixedcase on FIELD_DEFINITION
+directive @reversed on FIELD_DEFINITION
+directive @delegate(schema: String!, path: String!) on FIELD_DEFINITION
+
+"Single line description for Tweet"
+type Tweet {
+    id: ID!
+    # The tweet text. No more than 140 characters!
+    body: String   @lowercase @uppercase @mixedcase @reversed #Example comment
+    # When the tweet was published
+    date: Date
+    """
+    Multiline description
+    of the author field
+    """
+    Author: User    @uppercase
+    # Views, retweets, likes, etc
+    Stats: Stat @auth(role : "manager")
+}
+
+
+type User {
+    id: ID!
+    "Single line description"
+    username: String
+    first_name: String
+    last_name: String
+    full_name: String
+     @merge(
+            keyField: "id"
+            keyArg: "ids"
+            additionalArgs: """
+            scope: "all"
+            """
+        )
+    name: String @deprecated
+    avatar_url: Url
+    field_with_arg(arg1: String, unit: LengthUnit = METER): Float
+}
+
+type Stat @key(selectionSet: "{ views }"){
+    views: Int
+    likes: Int
+    retweets: Int
+    responses: Int @computed(selectionSet: "{ price weight }")
+}
+
+type Notification {
+    id: ID
+    date: Date
+    type: String
+}
+
+type Meta {
+    count: Int
+}
+
+scalar Url
+scalar Date
+
+input TweetId {
+  id: ID!
+}
+
+input TweetsQueryInput {
+  ids: [TweetId!]!
+}
+
+type Query {
+    Tweet(id: ID!): Tweet
+    Tweets(limit: Int, skip: Int, sort_field: String, sort_order: String): [Tweet]
+    TeetsQuery(data: TweetsQueryInput): [Tweets]! @merge(keyArg: "data.keys")
+    TweetsMeta: Meta
+    User(id: ID!): User @merge(keyField: "id")
+    Users(ids: [ID!]!, scope: String): [User]!
+        @merge(
+            keyField: "id"
+            keyArg: "ids"
+            additionalArgs: """
+            scope: "all"
+            """
+        )
+    Notifications(limit: Int): [Notification]
+    NotificationsMeta: Meta 
+}
+
+type Mutation {
+    createTweet (
+        body: String
+    ): Tweet
+    deleteTweet(id: ID!): Tweet
+    markTweetRead(id: ID!): Boolean
+    addTodo(
+        "Name for the todo item"
+        name: String!
+        "Priority levl of todo item"
+    priority: Priority = LOW): Todo!
+}
+
+fragment AccountResponse on Account {
+    name
+    
+}
+
+
+directive @tag(name: String!) repeatable on FIELD_DEFINITION
+
+type ProductVariation {
+  id: ID!
+}
+scalar UUID @specifiedBy(url: "https://tools.ietf.org/html/rfc4122")
+
+union SearchResult = Photo | Person
+
+extend type Query {
+  allProducts: [Product]
+  product(id: ID!): Product
+}

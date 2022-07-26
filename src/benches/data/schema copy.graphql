@@ -1,0 +1,277 @@
+# Default directives for Schema Stitching
+directive @merge(
+  keyField: String
+  keyArg: String
+  additionalArgs: String
+  key: [String!]
+  argsExpr: String
+) on FIELD_DEFINITION
+# directive @key(selectionSet: String!) on OBJECT
+directive @computed(selectionSet: String!) on FIELD_DEFINITION
+directive @canonical on OBJECT | INTERFACE | INPUT_OBJECT | UNION | ENUM | SCALAR | FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+
+# Scalars, Enums, Unions and Directives required for Apollo Federation
+scalar _Any
+scalar FieldSet
+scalar link__Import
+union _Entity
+enum link__Purpose {
+  """
+  `SECURITY` features provide metadata necessary to securely resolve fields.
+  """
+  SECURITY
+
+  """
+  `EXECUTION` features provide metadata necessary for operation execution.
+  """
+  EXECUTION
+}
+type _Service {
+  sdl: String
+}
+extend type Query {
+  _entities(representations: [_Any!]!): [_Entity]!
+  _service: _Service!
+}
+directive @external on FIELD_DEFINITION
+directive @requires(fields: FieldSet!) on FIELD_DEFINITION
+directive @provides(fields: FieldSet!) on FIELD_DEFINITION
+directive @key(fields: FieldSet!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
+directive @link(url: String, as: String, for: link__Purpose, import: [link__Import]) repeatable on SCHEMA
+directive @shareable on OBJECT | FIELD_DEFINITION
+directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+directive @override(from: String!) on FIELD_DEFINITION
+directive @extends on OBJECT | INTERFACE
+
+
+# Example Directives
+directive @auth(role : String!) on FIELD_DEFINITION
+directive @test(test : String!) on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+directive @uppercase on FIELD_DEFINITION | SCALAR | ENUM_VALUE
+directive @lowercase on FIELD_DEFINITION | SCALAR | ENUM_VALUE
+directive @mixedcase on FIELD_DEFINITION | SCALAR | ENUM_VALUE
+directive @reversed on FIELD_DEFINITION | SCALAR | ENUM_VALUE
+directive @delegate(schema: String!, path: String!) on FIELD_DEFINITION
+directive @example on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+"Just a repeatable directive"
+directive @repeatable_example repeatable on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+"Prisma DateTime Scalar"
+scalar DateTime
+
+enum Role @example {
+    ADMIN @uppercase
+    OTHER
+}
+
+"Single line description for Account"
+type Account implements BaseInput @exmaple {
+    """
+    Multiline description
+    of the name field
+    """
+    name: String! @lowercase @reversed #Example comment
+    friends: [Account!]!
+    best_friend: Account!
+    role: Role!
+    hidden_data: [String!] @auth(role: "ADMIN")
+    created_at: DateTime!
+}
+
+type GeneralError @example {
+    message: String @example @repeatable_example @repeatable_example
+} 
+
+type GeneralResponse {
+    success: Boolean
+    errors: [GeneralError]
+}
+
+type Base {
+    id: ID!
+}
+
+"""
+Input that implements another
+input
+"""
+input ChangeAccountNameInput @example @merge(
+        keyField: "id"
+        keyArg: "ids"
+        additionalArgs: """
+        scope: "all"
+        """
+    )  {
+    "Desc"
+    id: ID!
+    @merge(
+        keyField: "id"
+        keyArg: "ids"
+        additionalArgs: """
+        scope: "all"
+        """
+    )
+    name: String!
+}
+
+
+input GetTweetsInput  {
+    "Default value is one"
+    id: ID! = 1
+}
+
+extend input GetTweetsInput {
+    limit: Int = 10
+    sort: String = "DESC" @lowercase
+}
+
+type Query {
+    getAccount(id: ID!): Account
+    getTweets(data: GetTweetsInput!): TweetResponse
+}
+
+type Mutation {
+    changeAccountName(data: ChangeAccountNameInput!): GeneralResponse
+}
+
+type Subscription {
+    stream(id: ID!): GeneralResponse
+}
+
+enum Language {
+    EN
+    ES
+    JP
+}
+
+
+"This is an overly complicated enum to test if the parser works"
+
+enum ComplicatedEnum {
+	EN
+	@merge(
+        keyField: "id"
+        keyArg: "ids"
+        additionalArgs: """
+        scope: "all"
+        """
+    )
+	SP @repeatable @repeatable @merge
+    (
+        keyField: "id"
+        keyArg: "ids"
+        additionalArgs: """
+        scope: "all"
+        """
+    )
+	JP
+	FR @repeatable
+	"Other Description"
+	GR @repeatable @merge(
+        keyField: "id"
+        keyArg: "ids"
+        additionalArgs: """
+        scope: "all"
+        """
+    )
+    """
+    `SECURITY` features provide metadata necessary to securely resolve fields.
+    """
+    MN
+
+    """
+    `EXECUTION` features provide metadata necessary for operation execution.
+    """
+    VN
+    KR
+    @repeatable @test(test: "s") @lowercase
+    ES @repeatable
+    @repeatable @uppercase
+    PK  @repeatable
+}
+
+enum SentimentAnalysisProcessor {
+    GOOGLE
+    CUSTOM
+}
+
+enum SentimentAnalysisReulst {
+    WORD
+    NUMBER
+}
+
+interface Tweet {
+    tweet: String
+    "Example of a field with an argument in something other than queries"
+    translation("Desc" language: Language = EN @uppercase): String @lowercase
+    sentiment("""
+    Multiline Description of sentiment field argument one
+     """
+    processor: SentimentAnalysisProcessor @lowercase, 
+    """
+    Multiline Description of 
+    result field for argument two
+     """
+    result: SentimentAnalysisReulst = WORD @lowercase @test(test: "test"), 
+    
+    ): String @auth(role: "ADMIN")
+    account: Account
+}
+
+type RegularTweet implements Tweet {
+    tweet: String
+    account: Account
+    replies: RegularTweet
+}
+
+type VanishTweet implements Tweet {
+    tweet: String
+    account: Account
+    replies: RegularTweet
+    expiration: DateTime
+}
+
+type SponsoredTweet implements Tweet B C {  
+    tweet: String
+    account: Account
+    replies: RegularTweet
+    expiration: DateTime
+    sponsor: Account
+}
+
+type ProtectedTweet implements Tweet, A {
+    tweet: String
+    account: Account
+    replies: RegularTweet
+    allowed: [Account]
+}
+
+"This is the tweet response"
+union TweetResponse = RegularTweet | VanishTweet
+
+extend scalar DateTime @lowercase
+extend type Account {
+    updated_at: DateTime
+}
+extend interface Account {
+    created_at: DateTime
+}
+extend input ChangeAccountNameInput {
+    optional: String
+}
+extend union TweetResponse = SponsoredTweet | ProtectedTweet
+
+
+# Here just for testing my recursive field extractor
+fragment RegularAccount on Account {
+    name
+    friends
+    example {
+        test
+        name
+        ok {
+            what
+            cool
+        }
+    }
+}
