@@ -2,11 +2,11 @@
   "name": "wasm-graphql-parser",
   "description": "Just a basic graphql parser that uses Apollo's rust parser and custom logic to extract all info from a schema",
   "version": "1.0.0",
-  "license": "Apache",
+  "license": "Apache-2.0",
   "scripts": {
     "cp-types-dev": "cat ./typescript-types.ts >> ../packages/wasm-graphql-parser/wasm_graphql_parser.d.ts",
     "cp-types-prod": "cat ./typescript-types.ts >> ./pkg/wasm_graphql_parser.d.ts",
-    "gen-npmrc": "ts-node ./gen-npmrc.ts",
+    "gen-npmrc": "NPM_TOKEN=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 NPM_USER=luis-domenech NPM_EMAIL=luisfabiandomenech@gmail.com ts-node ./gen-npmrc.ts",
     "test": "cargo test",
     "check": "cargo check",
     "build": "cargo build",
@@ -18,7 +18,7 @@
     "compile-prod-bundler": "rimraf ./pkg && wasm-pack build --target bundler --out-dir ./pkg --release -- --offline",
     "compile-prod-web": "rimraf ./pkg && wasm-pack build --target web --out-dir ./pkg --release -- --offline",
     "compile-prod": "yarn && yarn compile-prod-node && yarn cp-types-prod && yarn gen-npmrc",
-    "deploy": "yarn && yarn compile-prod && wasm-pack build ./pkg"
+    "deploy": "yarn && yarn compile-prod && cd pkg && wasm-pack publish"
   },
   "dependencies": {},
   "author": "Luis F. Domenech Ortiz <luisfabiandomenech@gmail.com>",
