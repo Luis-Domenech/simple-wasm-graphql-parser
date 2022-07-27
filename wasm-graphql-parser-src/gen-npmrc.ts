@@ -15,18 +15,18 @@ const gen_npmrc = async () => {
     process.exit(1)
   }
   // Create fodler if it doesn't exist
-  // fs.mkdirSync(path.join(__dirname, "./pkg"), { recursive: true })
+  fs.mkdirSync(path.join(__dirname, "./pkg"), { recursive: true })
 
   let file_content = [
+    `@${process.env.NPM_USER}:registry=https://registry.npmjs.org/`,
     `//registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN}`,
     `email=${process.env.NPM_EMAIL}`,
     `always-auth=true`,
     // `registry = https://registry.npmjs.org/`,
-    `@${process.env.NPM_USER}:registry=https://registry.npmjs.org/`,
   ].join("\n")
 
   try {
-    fs.writeFileSync("~/.npmrc", file_content, {flag: "a+"})
+    fs.writeFileSync(path.join(__dirname, "./pkg"), file_content)
   }
   catch(e) {
     console.error(e)
