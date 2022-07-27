@@ -146,7 +146,7 @@ pub fn parse_directive_instance(to_parse: Option<Directives>, config: &Config) -
     };
 }
 
-pub fn parse_directive_data(to_parse: String, config: &Config) -> Option<Vec<DirectiveArgumentValues>> {
+pub fn parse_directive_data(to_parse: String, _config: &Config) -> Option<Vec<DirectiveArgumentValues>> {
     let mut directive_values: Vec<DirectiveArgumentValues> = vec![];
     let data = REGEX.match_all_parenthesis.replace_all(&to_parse, "").to_string();
 

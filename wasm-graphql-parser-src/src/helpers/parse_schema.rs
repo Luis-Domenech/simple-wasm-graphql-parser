@@ -31,7 +31,7 @@ pub fn parse_schema_def(schema_def: SchemaDefinition, config: &Config) -> Schema
     return schema;
 }
 
-pub fn parse_schema_extension(_schema_extension: SchemaExtension, _schemas: &mut Vec<Schema>, config: &Config) {
+pub fn parse_schema_extension(_schema_extension: SchemaExtension, _schemas: &mut Vec<Schema>, _config: &Config) {
     // I don't think schema extensions are a thing, especially since they have no name attached, and thus, we have no way of knowing which schema is which
     return;
 }

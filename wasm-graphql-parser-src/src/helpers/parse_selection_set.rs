@@ -3,7 +3,7 @@ use crate::prelude::{Selection, REGEX, Config};
 
 // TODO: Make this not recursive by modifying last added element to vector or hashmap
 // Did it this way cause I had problems dealing with variable borrows, moves, etc
-pub fn parse_selection_set(selection_set: SelectionSet, config: &Config) -> Vec<Selection> {
+pub fn parse_selection_set(selection_set: SelectionSet, _config: &Config) -> Vec<Selection> {
     let mut selections: Vec<Selection> = vec![];
     
     let mut stopping_point = 0;

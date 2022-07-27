@@ -11,7 +11,7 @@ const gen_npmrc = async () => {
     process.exit(1)
   }
   // Create fodler if it doesn't exist
-  fs.mkdirSync(path.join(__dirname, "../packages/wasm-graphql-parser"), { recursive: true })
+  fs.mkdirSync(path.join(__dirname, "./pkg"), { recursive: true })
 
   let file_content = [
     `registry=https://registry.npmjs.org/`,
@@ -22,7 +22,7 @@ const gen_npmrc = async () => {
   ].join("\n")
 
   try {
-    fs.writeFileSync(path.join(__dirname, "../packages/wasm-graphql-parser/.npmrc"), file_content)
+    fs.writeFileSync(path.join(__dirname, "./pkg/.npmrc"), file_content)
   }
   catch(e) {
     console.error(e)

@@ -458,7 +458,7 @@ pub fn process_fields(schema_data: &mut SchemaData, _config: &Config) {
 }
 
 
-pub fn par_process_fields(schema_data: &mut SchemaData, config: &Config) {
+pub fn par_process_fields(schema_data: &mut SchemaData, _config: &Config) {
     let enums: Vec<String> = if schema_data.enum_types.is_some() { schema_data.enum_types.as_ref().unwrap().par_iter().map(|e| e.name.clone()).collect() } else { vec![] };
     let scalars: Vec<String> = if schema_data.scalar_types.is_some() { schema_data.scalar_types.as_ref().unwrap().par_iter().map(|s| s.name.clone()).collect() } else { vec![] };
 
