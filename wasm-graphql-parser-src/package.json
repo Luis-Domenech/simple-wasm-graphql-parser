@@ -18,7 +18,7 @@
     "compile-prod-bundler": "rimraf ./pkg && wasm-pack build --target bundler --out-dir ./pkg --release -- --offline",
     "compile-prod-web": "rimraf ./pkg && wasm-pack build --target web --out-dir ./pkg --release -- --offline",
     "compile-prod": "yarn && yarn compile-prod-node && yarn cp-types-prod && yarn gen-npmrc",
-    "deploy": "yarn && yarn compile-prod && cd pkg && wasm-pack publish -- --userconfig .npmrc --access public --registry https://registry.npmjs.org/:_authToken=${NPM_TOKEN}"
+    "deploy": "yarn && yarn compile-prod && cd pkg && wasm-pack publish --access public -- --registry https://registry.npmjs.org/:_authToken=${NPM_TOKEN}"
   },
   "dependencies": {},
   "author": "Luis F. Domenech Ortiz <luisfabiandomenech@gmail.com>",
