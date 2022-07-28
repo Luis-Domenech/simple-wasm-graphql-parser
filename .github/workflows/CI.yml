@@ -26,14 +26,14 @@ jobs:
         uses: jetli/wasm-pack-action@v0.3.0
         with:
           version: 'latest'
-      - name: Compile WASM Package
-        run: yarn compile-prod
       - uses: actions/cache@v2
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
+      - name: Compile WASM Package
+        run: yarn compile-prod
       - name: Run Tests 🧪
         run: yarn test
   Publish:
