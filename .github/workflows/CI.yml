@@ -57,6 +57,5 @@ jobs:
         run: yarn deploy
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_USER: ${{ secrets.NPM_USER }}
-          NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
