@@ -5,10 +5,6 @@ const mod_package_json = async () => {
     console.error("NODE_AUTH_TOKEN and NPM_TOKEN are neither set in environment. Set one of them before deploying to prod.")
     process.exit(1)
   }
-  // if (!process.env.NPM_USER) {
-  //   console.error("NPM_USERis not set in environment")
-  //   process.exit(1)
-  // }
 
   let file_content = fs.readFileSync("./pkg/package.json", 'utf-8')
 
@@ -16,7 +12,7 @@ const mod_package_json = async () => {
 `,`,
 `  "publishConfig": {`,
 `    "registry": "https://registry.npmjs.org/"`,
-`  }`,
+`  },`,
 `  "homepage": "https://github.com/Luis-Domenech/wasm-graphql-parser",`,
 `  "author": "luis-domenech <luisfabiandomenech@gmail.com>",`,
 `  "keywords": [`,
@@ -50,7 +46,7 @@ const mod_package_json = async () => {
 `            "../CHANGELOG.md",`,
 `            "../package.json"`,
 `          ],`,
-`          "message": "chore(release): set \`package.json\` to \${nextRelease.versio} [skip ci]\n\n\${nextRelease.notes}"`,
+`          "message": "chore(release): set \`package.json\` to \${nextRelease.versio} [skip ci]\\n\\n\${nextRelease.notes}"`,
 `        }`,
 `      ]`,
 `    ]`,
