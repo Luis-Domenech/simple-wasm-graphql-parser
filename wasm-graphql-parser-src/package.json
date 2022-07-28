@@ -1,5 +1,5 @@
 {
-  "name": "wasm-graphql-parser",
+  "name": "wasm-graphql-parser-src",
   "description": "Just a basic graphql parser that uses Apollo's rust parser and custom logic to extract all info from a schema",
   "version": "1.0.0",
   "license": "Apache-2.0",
@@ -14,12 +14,12 @@
     "compile-dev-node": "rimraf ../packages/wasm-graphql-parser && wasm-pack build --target nodejs --out-dir ../packages/wasm-graphql-parser -- --offline",
     "compile-dev-bundler": "rimraf ../packages/wasm-graphql-parser && wasm-pack build --target bundler --out-dir ../packages/wasm-graphql-parser -- --offline",
     "compile-dev-web": "rimraf ../packages/wasm-graphql-parser && wasm-pack build --target web --out-dir ../packages/wasm-graphql-parser -- --offline",
-    "compile-dev": "yarn && yarn compile-dev-node && yarn cp-types-dev",
+    "compile-dev": "yarn compile-dev-node && yarn cp-types-dev",
     "compile-prod-node": "rimraf ./pkg && wasm-pack build --target nodejs --out-dir ./pkg --release -- --offline",
     "compile-prod-bundler": "rimraf ./pkg && wasm-pack build --target bundler --out-dir ./pkg --release -- --offline",
     "compile-prod-web": "rimraf ./pkg && wasm-pack build --target web --out-dir ./pkg --release -- --offline",
-    "compile-prod": "yarn && yarn compile-prod-node && yarn cp-types-prod",
-    "deploy": "yarn compile-prod && cd pkg && semantic-release"
+    "compile-prod": "yarn compile-prod-node && yarn cp-types-prod",
+    "deploy": "yarn && yarn compile-prod && cd pkg && semantic-release"
   },
   "dependencies": {},
   "author": "luis-domenech <luisfabiandomenech@gmail.com>",
