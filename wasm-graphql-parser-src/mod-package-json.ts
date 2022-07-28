@@ -9,12 +9,14 @@ const mod_package_json = async () => {
   let file_content = fs.readFileSync("./pkg/package.json", 'utf-8')
 
   let content = [
-    `"publishConfig": {`,
-    ` "registry": "https://registry.npmjs.org/:_authToken=$${process.env.NODE_AUTH_TOKEN ? 'process.env.NODE_AUTH_TOKEN' : 'process.env.NPM_TOKEN'}"`,
+    `,`,
+    `  "publishConfig": {`,
+    `    "registry": "https://registry.npmjs.org/:_authToken=$${process.env.NODE_AUTH_TOKEN ? 'process.env.NODE_AUTH_TOKEN' : 'process.env.NPM_TOKEN'}"`,
+    `  }`,
     `}`
   ].join("\n")
 
-  file_content = file_content.replace(/([}]+[\s]*$)/gm, content)
+  file_content = file_content.replace(/([\s]*[}]+[\s]*$)/gm, content)
 
   try {
     fs.writeFileSync("./pkg/package.json", file_content)
