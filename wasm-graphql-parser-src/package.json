@@ -7,20 +7,20 @@
     "cp-types": "cat ./typescript-types.ts >> ./pkg/wasm_graphql_parser.d.ts",
     "gen-npmrc": "ts-node ./gen-npmrc.ts",
     "mod-pkg-json": "ts-node ./mod-pkg-json.ts",
+    "rm-pkg": "ts-node ./rm-dir.ts",
     "test": "cargo test",
     "check": "cargo check",
     "build": "cargo build",
-    "compile-dev-node": "rimraf ./pkg && wasm-pack build --target nodejs --out-dir ./pkg -- --offline",
-    "compile-dev-bundler": "rimraf ./pkg && wasm-pack build --target bundler --out-dir ./pkg -- --offline",
-    "compile-dev-web": "rimraf ./pkg && wasm-pack build --target web --out-dir ./pkg -- --offline",
-    "compile-dev": "yarn compile-dev-node && yarn cp-types",
-    "compile-prod-node": "rimraf ./pkg && wasm-pack build --target nodejs --out-dir ./pkg --release -- --offline",
-    "compile-prod-bundler": "rimraf ./pkg && wasm-pack build --target bundler --out-dir ./pkg --release -- --offline",
-    "compile-prod-web": "rimraf ./pkg && wasm-pack build --target web --out-dir ./pkg --release -- --offline",
-    "compile-prod": "yarn compile-prod-node && yarn cp-types && yarn mod-pkg-json",
-    "deploy": "cd pkg && semantic-release"
+    "compile-dev-node": "wasm-pack build --target nodejs --out-dir ./pkg -- --offline",
+    "compile-dev-bundler": "wasm-pack build --target bundler --out-dir ./pkg -- --offline",
+    "compile-dev-web": "wasm-pack build --target web --out-dir ./pkg -- --offline",
+    "compile-dev": "yarn rm-dir && yarn compile-dev-node && yarn cp-types",
+    "compile-prod-node": "wasm-pack build --target nodejs --out-dir ./pkg --release -- --offline",
+    "compile-prod-bundler": "wasm-pack build --target bundler --out-dir ./pkg --release -- --offline",
+    "compile-prod-web": "wasm-pack build --target web --out-dir ./pkg --release -- --offline",
+    "compile-prod": "yarn rm-dir && yarn compile-prod-node && yarn cp-types",
+    "deploy": "yarn mod-pkg-json && cd pkg && semantic-release"
   },
-  "dependencies": {},
   "author": "Luis F. Domenech Ortiz <luisfabiandomenech@gmail.com> (https://luisfdomenech.com/)",
   "homepage": "https://github.com/Luis-Domenech/wasm-graphql-parser",
   "repository": {
@@ -39,8 +39,6 @@
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
-    "otplib": "^12.0.1",
-    "rimraf": "^3.0.2",
     "semantic-release": "^19.0.3"
   }
 }

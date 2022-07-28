@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "test": "yarn upgrade --dev wasm-graphql-parser && ts-node ./test.ts"
+    "update": "yarn upgrade --dev wasm-graphql-parser",
+    "test": "ts-node ./test.ts"
   },
   "devDependencies": {
     "@swc/wasm": "^1.2.218",
