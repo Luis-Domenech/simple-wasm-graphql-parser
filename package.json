@@ -1,7 +1,9 @@
 {
   "private": true,
   "workspaces": [
-    "packages/*"
+    "wasm-graphql-parser-src",
+    "wasm-graphql-parser-src/pkg",
+    "packages/backend-test"
   ],
   "devDependencies": {
     "@commitlint/cli": "16.2.3",
