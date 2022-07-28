@@ -11,7 +11,8 @@ const mod_package_json = async () => {
   let content = [
     `,`,
     `  "publishConfig": {`,
-    `    "registry": "https://registry.npmjs.org/:_authToken=$${process.env.NODE_AUTH_TOKEN ? 'process.env.NODE_AUTH_TOKEN' : 'process.env.NPM_TOKEN'}"`,
+    // `    "registry": "https://registry.npmjs.org/:_authToken=$${process.env.NODE_AUTH_TOKEN ? 'process.env.NODE_AUTH_TOKEN' : 'process.env.NPM_TOKEN'}"`,
+    `    "registry": "https://registry.npmjs.org/"`,
     `  }`,
     `}`
   ].join("\n")
