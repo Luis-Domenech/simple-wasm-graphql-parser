@@ -1,6 +1,6 @@
 import fs from 'node:fs'
 
-const mod_package_json = async () => {
+const mod_pkg_json = async () => {
   if (!process.env.NODE_AUTH_TOKEN && !process.env.NPM_TOKEN) {
     console.error("NODE_AUTH_TOKEN and NPM_TOKEN are neither set in environment. Set one of them before deploying to prod.")
     process.exit(1)
@@ -14,7 +14,7 @@ const mod_package_json = async () => {
 `    "registry": "https://registry.npmjs.org/"`,
 `  },`,
 `  "homepage": "https://github.com/Luis-Domenech/wasm-graphql-parser",`,
-`  "author": "luis-domenech <luisfabiandomenech@gmail.com>",`,
+`  "author": "Luis F. Domenech Ortiz <luisfabiandomenech@gmail.com> (https://luisfdomenech.com)",`,
 `  "keywords": [`,
 `    "rust",`,
 `    "webassembly",`,
@@ -65,6 +65,6 @@ const mod_package_json = async () => {
   }
 }
 
-mod_package_json()
+mod_pkg_json()
 .then()
 .catch(e => console.log(e))

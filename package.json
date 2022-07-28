@@ -3,7 +3,7 @@
   "workspaces": [
     "wasm-graphql-parser-src",
     "wasm-graphql-parser-src/pkg",
-    "packages/backend-test"
+    "backend-test"
   ],
   "devDependencies": {
     "@commitlint/cli": "16.2.3",
@@ -12,7 +12,9 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "test": "cd wasm-graphql-parser-src && yarn compile-dev && cd ../packages/backend-test && yarn test",
+    "compile-dev": "cd wasm-graphql-parser-src && yarn compile-dev",
+    "compile-prod": "cd wasm-graphql-parser-src && yarn compile-prod",
+    "test": "cd backend-test && yarn test",
     "deploy": "cd wasm-graphql-parser-src && yarn deploy"
   }
 }
