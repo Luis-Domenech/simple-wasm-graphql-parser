@@ -1,4 +1,4 @@
-![integration logo](https://raw.githubusercontent.com/Luis-Domenech/wasm-graphql-parser/main/assets/integration.png)
+![integration logo](https://raw.githubusercontent.com/Luis-Domenech/wasm-graphql-parser/main/assets/imgs/integration.png)
 
 # wasm-graphql-parser
 
