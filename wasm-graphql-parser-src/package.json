@@ -18,7 +18,7 @@
     "compile-prod-node": "rimraf ./pkg && wasm-pack build --target nodejs --out-dir ./pkg --release -- --offline",
     "compile-prod-bundler": "rimraf ./pkg && wasm-pack build --target bundler --out-dir ./pkg --release -- --offline",
     "compile-prod-web": "rimraf ./pkg && wasm-pack build --target web --out-dir ./pkg --release -- --offline",
-    "compile-prod": "yarn && yarn compile-prod-node && yarn cp-types-prod",
+    "compile-prod": "yarn && yarn compile-prod-node && yarn cp-types-prod && yarn mod-pkg-json",
     "deploy": "yarn compile-prod && cd pkg && wasm-pack publish --access public"
   },
   "dependencies": {

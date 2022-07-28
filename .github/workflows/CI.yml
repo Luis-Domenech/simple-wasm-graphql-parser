@@ -55,8 +55,10 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
       - name: Publish 🚀
         working-directory: ./
-        run: npm config set @luis-domenech:registry https://registry.npmjs.org/ && yarn deploy
+        # run: npm config set @luis-domenech:registry https://registry.npmjs.org/ && yarn deploy
+        run: yarn deploy
         env:
+          NPM_USER: ${{ secrets.NPM_USER }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
