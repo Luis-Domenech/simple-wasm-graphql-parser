@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/Luis-Domenech/wasm-graphql-parser/compare/v1.0.0...v1.0.1) (2022-07-29)
+
+
+### Bug Fixes
+
+* **parser:** Changed package name to simple-wasm-graphql-parser ([e26e7a7](https://github.com/Luis-Domenech/wasm-graphql-parser/commit/e26e7a75b7ff7b3c0cbf46115728562a6d1827a5))
+
 # 1.0.0 (2022-07-29)
 
 
