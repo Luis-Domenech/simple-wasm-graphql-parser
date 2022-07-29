@@ -1,7 +1,7 @@
 [package]
-name = "wasm-graphql-parser"
+name = "simple-wasm-graphql-parser"
 version = "0.1.0"
-authors = ["Luis-Domenech <luisfabiandomenech@gmail.com>"]
+authors = ["Luis F. Domenech Ortiz <luisfabiandomenech@gmail.com> (https://luisfdomenech.com)"]
 edition = "2018"
 description = "A very basic GraphQL parser that uses Apollo's parser as a start and some custom logic to extract all data from a schema. The package in npm was built and published using wasm-pack."
 repository = "https://github.com/Luis-Domenech/wasm-graphql-parser"

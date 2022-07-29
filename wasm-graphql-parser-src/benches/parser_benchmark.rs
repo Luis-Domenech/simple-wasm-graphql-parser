@@ -2,7 +2,7 @@ use std::time::Duration;
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
-use wasm_graphql_parser::{parse_schema_from_file_and_print, types::Config};
+use simple_wasm_graphql_parser::{parse_schema_from_file_and_print, types::Config};
 
 fn criterion_benchmark(c: &mut Criterion) {
     let parellel_config: Config = Config {

@@ -1,4 +1,4 @@
-use wasm_graphql_parser::{parse_schema_from_file_and_print, types::Config};
+use simple_wasm_graphql_parser::{parse_schema_from_file_and_print, types::Config};
 
 fn main() {
     let config: Config = Config {
