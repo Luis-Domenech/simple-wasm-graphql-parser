@@ -61,7 +61,7 @@ jobs:
           path: "**/node_modules"
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile && cd wasm-graphql-parser-src && yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile && cd simple-wasm-graphql-parser-src && yarn install --frozen-lockfile
       - name: Publish 🚀
         run: yarn deploy
         env:
