@@ -1,11 +1,11 @@
 {
-  "name": "wasm-graphql-parser-src",
+  "name": "simple-wasm-graphql-parser-src",
   "description": "Just a basic graphql parser that uses Apollo's rust parser and custom logic to extract all info from a schema",
   "version": "1.0.2",
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
-    "cp-types": "cat ./typescript-types.ts >> ./pkg/wasm_graphql_parser.d.ts",
+    "cp-types": "cat ./typescript-types.ts >> ./pkg/simple_wasm_graphql_parser.d.ts",
     "gen-npmrc": "ts-node ./gen-npmrc.ts",
     "mod-pkg-json": "ts-node ./mod-pkg-json.ts",
     "rm-pkg-dir": "ts-node ./rm-pkg-dir.ts",
@@ -23,10 +23,10 @@
     "deploy": "yarn mod-pkg-json && semantic-release"
   },
   "author": "Luis F. Domenech Ortiz <luisfabiandomenech@gmail.com> (https://luisfdomenech.com/)",
-  "homepage": "https://github.com/Luis-Domenech/wasm-graphql-parser",
+  "homepage": "https://github.com/Luis-Domenech/simple-wasm-graphql-parser",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Luis-Domenech/wasm-graphql-parser"
+    "url": "https://github.com/Luis-Domenech/simple-wasm-graphql-parser"
   },
   "keywords": [
     "rust",

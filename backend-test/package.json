@@ -4,15 +4,15 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "update": "yarn upgrade --dev wasm-graphql-parser",
+    "update": "yarn upgrade --dev simple-wasm-graphql-parser",
     "test": "ts-node ./test.ts"
   },
   "devDependencies": {
     "@swc/wasm": "^1.2.218",
     "@types/node": "17.0.21",
     "regenerator-runtime": "^0.13.9",
+    "simple-wasm-graphql-parser": "file:../simple-wasm-graphql-parser-src/pkg",
     "ts-node": "^10.9.1",
-    "typescript": "^4.7.4",
-    "wasm-graphql-parser": "file:../wasm-graphql-parser-src/pkg"
+    "typescript": "^4.7.4"
   }
 }

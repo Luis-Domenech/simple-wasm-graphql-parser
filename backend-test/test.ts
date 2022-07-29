@@ -1,12 +1,10 @@
-import fs, { cp } from 'node:fs'
-import { fileURLToPath } from 'node:url'
-import { dirname, join } from 'node:path'
-import { parse_schema_for_typescript, SchemaData } from 'wasm-graphql-parser'
+import fs from 'node:fs'
+import { join } from 'node:path'
+// If using --target nodejs as build target, straight up importing magically works
+import { FieldData, parse_schema_for_typescript, SchemaData } from 'simple-wasm-graphql-parser'
 
 // Requires --target nodejs
-// If using target nodejs, straight up importing works
-const loadWasmInNodeJS = async () => {
-
+const test_parser = async () => {
   try {
     const schema_data: Buffer = fs.readFileSync(join(__dirname, "./schema.graphql"))
     const raw_schema = schema_data.toString()
@@ -19,21 +17,24 @@ const loadWasmInNodeJS = async () => {
         data.interface_types && 
         data.object_types && 
         data.scalar_types &&
-        data.union_types) console.log("WASM GraphQL Parser is working")
+        data.union_types) console.log("Simple WASM GraphQL Parser is working")
     else {
-      console.error("WASM GraphQL Parser is NOT working")
+      console.error("Simple WASM GraphQL Parser is NOT working")
       process.exit(1)
     }
+
   }
   catch(e) {
     console.log(e)
   }
 }
 
+// Idea of this test is to replicate how a nodejs project would call the parser
+// This is more for internal testing of the parser
+// Unit tests and such should not be handled in this backend-test package
 const main = async () => {
-  await loadWasmInNodeJS()
+  await test_parser()
 }
-
 
 main()
 .then()

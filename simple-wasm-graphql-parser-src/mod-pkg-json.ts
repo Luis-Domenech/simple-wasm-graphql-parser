@@ -8,7 +8,7 @@ const mod_pkg_json = async () => {
 `  "publishConfig": {`,
 `    "registry": "https://registry.npmjs.org/"`,
 `  },`,
-`  "homepage": "https://github.com/Luis-Domenech/wasm-graphql-parser",`,
+`  "homepage": "https://github.com/Luis-Domenech/simple-wasm-graphql-parser",`,
 // `  "author": "Luis F. Domenech Ortiz <luisfabiandomenech@gmail.com> (https://luisfdomenech.com)",`,
 `  "keywords": [`,
 `    "rust",`,
