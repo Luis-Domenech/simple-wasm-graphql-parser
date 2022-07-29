@@ -1,7 +1,6 @@
 {
     "branches": [
-        "main",
-        "next"
+        "main"
     ],
     "plugins": [
         "@semantic-release/commit-analyzer",
@@ -23,10 +22,9 @@
             "@semantic-release/git",
             {
                 "assets": [
-                    "CHANGELOG.md",
-                    "package.json"
+                    "CHANGELOG.md"
                 ],
-                "message": "chore(release): set `package.json` to ${nextRelease.versio} [skip ci]\n\n${nextRelease.notes}"
+                "message": "chore(release): updated `CHANGELOG.md` to ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
             }
         ]
     ]

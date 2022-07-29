@@ -6,11 +6,10 @@ const mod_pkg_json = async () => {
   let content = [
 `,`,
 `  "publishConfig": {`,
-`    "registry": "https://registry.npmjs.org/",`,
-`    "tag": "latest"`,
+`    "registry": "https://registry.npmjs.org/"`,
 `  },`,
 `  "homepage": "https://github.com/Luis-Domenech/wasm-graphql-parser",`,
-`  "author": "Luis F. Domenech Ortiz <luisfabiandomenech@gmail.com> (https://luisfdomenech.com)",`,
+// `  "author": "Luis F. Domenech Ortiz <luisfabiandomenech@gmail.com> (https://luisfdomenech.com)",`,
 `  "keywords": [`,
 `    "rust",`,
 `    "webassembly",`,

@@ -1,8 +1,9 @@
 {
   "name": "wasm-graphql-parser-src",
   "description": "Just a basic graphql parser that uses Apollo's rust parser and custom logic to extract all info from a schema",
-  "version": "0.1.0",
+  "version": "1.0.2",
   "license": "Apache-2.0",
+  "private": true,
   "scripts": {
     "cp-types": "cat ./typescript-types.ts >> ./pkg/wasm_graphql_parser.d.ts",
     "gen-npmrc": "ts-node ./gen-npmrc.ts",

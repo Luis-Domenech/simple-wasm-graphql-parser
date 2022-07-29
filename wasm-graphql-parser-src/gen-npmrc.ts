@@ -1,5 +1,4 @@
 import fs from 'node:fs'
-import path from 'node:path'
 
 const gen_npmrc = async () => {
   if (!process.env.NPM_TOKEN) {
