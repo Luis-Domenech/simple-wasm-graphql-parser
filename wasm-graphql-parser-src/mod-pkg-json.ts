@@ -1,17 +1,13 @@
 import fs from 'node:fs'
 
 const mod_pkg_json = async () => {
-  if (!process.env.NODE_AUTH_TOKEN && !process.env.NPM_TOKEN) {
-    console.error("NODE_AUTH_TOKEN and NPM_TOKEN are neither set in environment. Set one of them before deploying to prod.")
-    process.exit(1)
-  }
-
   let file_content = fs.readFileSync("./pkg/package.json", 'utf-8')
 
   let content = [
 `,`,
 `  "publishConfig": {`,
-`    "registry": "https://registry.npmjs.org/"`,
+`    "registry": "https://registry.npmjs.org/",`,
+`    "tag": "latest"`,
 `  },`,
 `  "homepage": "https://github.com/Luis-Domenech/wasm-graphql-parser",`,
 `  "author": "Luis F. Domenech Ortiz <luisfabiandomenech@gmail.com> (https://luisfdomenech.com)",`,
@@ -23,34 +19,35 @@ const mod_pkg_json = async () => {
 `    "parser",`,
 `    "schema",`,
 `    "typescript"`,
-`  ],`,
-`  "release": {`,
-`    "branches": [`,
-`      "main"`,
-`    ],`,
-`    "plugins": [`,
-`      "@semantic-release/commit-analyzer",`,
-`      "@semantic-release/release-notes-generator",`,
-`      [`,
-`        "@semantic-release/changelog",`,
-`        {`,
-`          "changelogFile": "../CHANGELOG.md"`,
-`        }`,
-`      ],`,
-`      "@semantic-release/npm",`,
-`      "@semantic-release/github",`,
-`      [`,
-`        "@semantic-release/git",`,
-`        {`,
-`          "assets": [`,
-`            "../CHANGELOG.md",`,
-`            "../package.json"`,
-`          ],`,
-`          "message": "chore(release): set \`package.json\` to \${nextRelease.versio} [skip ci]\\n\\n\${nextRelease.notes}"`,
-`        }`,
-`      ]`,
-`    ]`,
-`  }`,
+`  ]`,
+// `  ],`,
+// `  "release": {`,
+// `    "branches": [`,
+// `      "main"`,
+// `    ],`,
+// `    "plugins": [`,
+// `      "@semantic-release/commit-analyzer",`,
+// `      "@semantic-release/release-notes-generator",`,
+// `      [`,
+// `        "@semantic-release/changelog",`,
+// `        {`,
+// `          "changelogFile": "../CHANGELOG.md"`,
+// `        }`,
+// `      ],`,
+// `      "@semantic-release/npm",`,
+// `      "@semantic-release/github",`,
+// `      [`,
+// `        "@semantic-release/git",`,
+// `        {`,
+// `          "assets": [`,
+// `            "../CHANGELOG.md",`,
+// `            "../package.json"`,
+// `          ],`,
+// `          "message": "chore(release): set \`package.json\` to \${nextRelease.versio} [skip ci]\\n\\n\${nextRelease.notes}"`,
+// `        }`,
+// `      ]`,
+// `    ]`,
+// `  }`,
 `}`
   ].join("\n")
 
