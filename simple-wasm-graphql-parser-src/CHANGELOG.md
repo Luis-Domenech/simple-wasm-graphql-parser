@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/Luis-Domenech/simple-wasm-graphql-parser/compare/v1.0.2...v1.0.3) (2022-08-03)
+
+
+### Bug Fixes
+
+* **parser:** Removed unecessary regex use ([0323188](https://github.com/Luis-Domenech/simple-wasm-graphql-parser/commit/0323188a824062ac9566ab377888f46768f3f3bf))
+
 ## [1.0.2](https://github.com/Luis-Domenech/simple-wasm-graphql-parser/compare/v1.0.1...v1.0.2) (2022-07-29)
 
 
