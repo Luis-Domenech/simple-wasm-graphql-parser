@@ -1,3 +1,11 @@
+## [1.0.2](https://github.com/Luis-Domenech/simple-wasm-graphql-parser/compare/v1.0.1...v1.0.2) (2022-07-29)
+
+
+### Bug Fixes
+
+* **CI:** Fixed missing directory name changed in CI ([e4122e4](https://github.com/Luis-Domenech/simple-wasm-graphql-parser/commit/e4122e4723287c657a62830ca1d8a5fc20953e44))
+* **general:** Did some much needed code cleanup and readme changes ([4d13a17](https://github.com/Luis-Domenech/simple-wasm-graphql-parser/commit/4d13a17b930656215b1cf848f566b9a773a17d85))
+
 ## [1.0.1](https://github.com/Luis-Domenech/wasm-graphql-parser/compare/v1.0.0...v1.0.1) (2022-07-29)
 
 
