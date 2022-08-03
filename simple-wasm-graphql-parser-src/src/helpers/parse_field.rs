@@ -8,7 +8,6 @@ pub fn parse_field(field_def: FieldDefs, config: &Config) -> FieldData {
             let mut field_name = field_def.name().unwrap().text().to_string();
             field_name = REGEX.match_whitespace.replace_all(&field_name, "").to_string();
 
-
             let field_description = match field_def.description() {
                 Some(desc) => Some(REGEX.match_description_beginning_end_quotes.replace_all(&desc.to_string(), "").to_string()),
                 None => None
@@ -48,8 +47,16 @@ pub fn parse_field(field_def: FieldDefs, config: &Config) -> FieldData {
 
                 for (index, input_value_def) in argument_def.input_value_definitions().enumerate() {
                     let argument_name = input_value_def.name().unwrap().to_string();
-                    let mut argument_complete_type = input_value_def.ty().unwrap().to_string(); 
-                    let argument_type = REGEX.match_brackets_and_exclamation.replace_all(&argument_complete_type, "").to_string();
+                    field_name = REGEX.match_whitespace.replace_all(&field_name, "").to_string();
+                    field_name = REGEX.match_linebreak.replace_all(&field_name, "").to_string();
+
+                    let mut argument_complete_type = input_value_def.ty().unwrap().to_string();                     
+
+                    let mut argument_type = REGEX.match_brackets_and_exclamation.replace_all(&argument_complete_type, "").to_string();
+                    match REGEX.match_word.captures(&argument_complete_type).unwrap() {
+                        Some(caps) => argument_type = caps.get(0).unwrap().as_str().to_string(),
+                        None => Logger::error("Error getting type for {}", Some(&argument_complete_type), config)
+                    }
                     
                     // Just match the type from the string, just in case
                     match REGEX.match_complete_type.captures(&argument_complete_type).unwrap() {

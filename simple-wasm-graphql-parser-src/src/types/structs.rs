@@ -210,6 +210,7 @@ pub struct RegexPattern {
     pub match_all_directives_with_parenthesis: Regex,
     pub match_directive_name: Regex,
     pub match_whitespace: Regex,
+    pub match_linebreak: Regex,
     pub match_on_word: Regex,
     pub match_first_word: Regex,
     pub match_word: Regex,

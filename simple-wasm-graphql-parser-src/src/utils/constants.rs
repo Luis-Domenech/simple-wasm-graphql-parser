@@ -18,6 +18,7 @@ lazy_static! {
         match_all_directives_with_parenthesis: Regex::new("(@{1}\\w+\\s*[(]+[\\s\\r\\n\\w:\"{$}]+[)]+)").unwrap(),
         match_directive_name: Regex::new(r"@\w+").unwrap(),
         match_whitespace: Regex::new(r"\s+").unwrap(),
+        match_linebreak: Regex::new(r"[\r\n]+").unwrap(),
         match_on_word: Regex::new(r"(\s*(on)+\s+)+").unwrap(),
         match_first_word: Regex::new(r"[^\s][\w]+").unwrap(),
         match_word: Regex::new(r"[\w]+").unwrap(),
