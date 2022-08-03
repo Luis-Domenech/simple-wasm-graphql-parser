@@ -48,7 +48,6 @@ pub fn parse_field(field_def: FieldDefs, config: &Config) -> FieldData {
                 for (index, input_value_def) in argument_def.input_value_definitions().enumerate() {
                     let argument_name = input_value_def.name().unwrap().to_string();
                     field_name = REGEX.match_whitespace.replace_all(&field_name, "").to_string();
-                    field_name = REGEX.match_linebreak.replace_all(&field_name, "").to_string();
 
                     let mut argument_complete_type = input_value_def.ty().unwrap().to_string();                     
 
