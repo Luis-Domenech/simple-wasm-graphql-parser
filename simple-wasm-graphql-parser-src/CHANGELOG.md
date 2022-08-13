@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/Luis-Domenech/simple-wasm-graphql-parser/compare/v1.0.3...v1.0.4) (2022-08-13)
+
+
+### Bug Fixes
+
+* **parser:** Fixed issue where scalar and enums were not identified correctly ([137a607](https://github.com/Luis-Domenech/simple-wasm-graphql-parser/commit/137a6074ef02b570a35d901008e66c1b47d4a1c3))
+
 ## [1.0.3](https://github.com/Luis-Domenech/simple-wasm-graphql-parser/compare/v1.0.2...v1.0.3) (2022-08-03)
 
 
