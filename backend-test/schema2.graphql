@@ -1,0 +1,1325 @@
+type Query {
+  me: AccountResponse!
+  accountLogin(data: AccountLoginInput!): AccountResponse!
+  accountLogout: GeneralResponse!
+  getCall(data: GetCallInput!): CallResponse!
+  runAtlasCombinationAI(data: RunAtlasCombinationAIInput!): CombinationResponse!
+  getCombination(data: GetCombinationInput!): CombinationResponse!
+  getCombinations(data: GetCombinationsInput!): CombinationsResponse!
+  getRandomCombination(data: GetRandomCombinationInput!): CombinationResponse!
+  getZipCodeLocale(data: GetZipCodeLocaleInput!): ZipCodeLocaleResponse!
+  isInArea(data: InAreaCheckInput!): InAreaCheckResponse!
+  getIndividualWithToken(
+    data: GetIndividualWithTokenInput!
+  ): IndividualResponse!
+  getIndividual(data: GetIndividualInput!): IndividualResponse!
+  getIndividualCalls(data: GetIndividualCallsInput!): CallsResponse!
+  getEstablishment(data: GetEstablishmentInput!): EstablishmentResponse!
+  getEstablishmentDrivers(data: GetEstablishmentDriversInput!): DriversResponse!
+  getEstablishmentCalls(data: GetEstablishmentCallsInput!): CallsResponse!
+  getMenu(data: GetMenuInput!): MenuResponse!
+  getOrder(data: GetOrderInput!): OrderResponse!
+  getOrderDriver(data: GetOrderDriverInput!): DriverResponse!
+  getOrderWithTransaction(
+    data: GetOrderWithTransactionInput!
+  ): TransactionWithOrderResponse!
+  getTransactions(data: GetTransactionsInput!): TransactionsResponse!
+  comunityAdminLogin(data: CommunityAdminLoginInput!): CommunityAdminResponse!
+  comunityAdminLogout: GeneralResponse!
+  getCommunityAdmin(data: GetCommunityAdminInput!): CommunityAdminResponse!
+  getCommunity(data: GetCommunityInput!): CommunityResponse!
+  getGateEntry(data: GetGateEntryInput!): GateEntryResponse!
+  getLatestGateEntryFromGate(
+    data: GetLatestGateEntryFromGateInput!
+  ): GateEntryResponse!
+  getGate(data: GetGateInput!): GateResponse!
+  getResidence(data: GetResidenceInput!): ResidenceResponse!
+  residentLogin(data: ResidentLoginInput!): ResidentResponse!
+  residentLogout: GeneralResponse!
+  getResident(data: GetResidentInput!): ResidentResponse!
+  getVisitor(data: GetVisitorInput!): VisitorResponse!
+  getSchema: SchemaResponse!
+}
+
+type AccountResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  account: Account
+}
+
+type RegularError {
+  message: String!
+}
+
+type Account {
+  id: ID
+  email: String!
+  name: String!
+  last_name: String!
+  address: String!
+  city: String!
+  state: String!
+  country: String!
+  zip_code: String!
+  account_type: String!
+  business_details: String!
+  establishments: [Establishment!]
+  communities: [Community!]
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type Establishment {
+  id: ID
+  phone: String!
+  name: String!
+  address: String!
+  city: String!
+  state: String!
+  country: String!
+  zip_code: String!
+  languages: String!
+  paid: Boolean!
+  active: Boolean!
+  tax_rate: Float!
+  longitude: Float!
+  latitude: Float!
+  radius: Float!
+  pos: PoS
+  market: Market
+  subscription: Subscription
+  drivers: [Driver!]
+  calls: [Call!]
+  fallback_phone: String
+  menu: Menu
+  account: Account
+  account_id: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+enum PoS {
+  PIXEL_POINT
+  ALOHA
+  LUMYNAL
+  OTHER
+}
+
+enum Market {
+  RESTAURANT
+  CLINIC
+  SHOP
+  OTHER
+}
+
+enum Subscription {
+  ATLAS_NULL
+  ATLAS_BASIC
+  ATLAS_MID
+  ATLAS_WORLD
+}
+
+type Driver {
+  id: Int
+  orders: [Order!]
+  individual: Individual
+  individual_phone: String!
+  establishment: Establishment
+  establishment_phone: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type Order {
+  id: ID
+  combination_id: String!
+  order: String!
+  price: Float!
+  status: Status
+  transaction: Transaction
+  call: Call
+  call_id: Int
+  driver: Driver
+  driver_id: Int
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+enum Status {
+  CREATED
+  PROCESSING
+  DELIVERING
+  APPROVED
+  PAID
+  COMPLETED
+  CANCELLED
+  UNPAID
+  REFUNDED
+}
+
+type Transaction {
+  token: ID
+  status: String!
+  processor: PaymentProcessor
+  links: String
+  order: Order
+  order_id: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+enum PaymentProcessor {
+  PAYPAL
+  STRIPE
+}
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+type Call {
+  id: Int
+  step: String!
+  language: Language
+  completed: Boolean!
+  order: Order
+  individual: Individual
+  individual_phone: String!
+  establishment: Establishment
+  establishment_phone: String
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+enum Language {
+  EN
+  ES
+}
+
+type Individual {
+  id: ID
+  phone: String!
+  calls: [Call!]
+  visitors: [Visitor!]
+  name: String
+  last_name: String
+  address: String
+  city: String
+  state: String
+  country: String
+  zip_code: String
+  language: Language
+  driver: Driver
+  resident: Resident
+  community_admin: CommunityAdmin
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type Visitor {
+  id: ID
+  residences: [Residence!]
+  gate_entries: [GateEntry!]
+  nicknames: String
+  vehicle_make: String
+  vehicle_model: String
+  vehicle_year: String
+  license_plate: String
+  resident: Resident
+  resident_id: String!
+  individual: Individual
+  individual_phone: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type Residence {
+  id: ID
+  residence_number: String!
+  address: String!
+  residents: [Resident!]
+  visitors: [Visitor!]
+  gate_entries: [GateEntry!]
+  nicknames: String
+  community: Community
+  community_id: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type Resident {
+  id: ID
+  residences: [Residence!]
+  communiies: [Community!]
+  visitors: [Visitor!]
+  gate_entries: [GateEntry!]
+  created_at: DateTime!
+  updated_at: DateTime!
+  email: String
+  individual: Individual
+  individual_phone: String!
+}
+
+type Community {
+  id: ID
+  name: String!
+  address: String!
+  city: String!
+  state: String!
+  country: String!
+  zip_code: String!
+  residences: [Residence!]
+  residents: [Resident!]
+  gates: [Gate!]
+  community_admins: [CommunityAdmin!]
+  account: Account
+  account_id: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type Gate {
+  id: ID
+  name: String!
+  languages: String!
+  license_paid: Boolean!
+  active: Boolean!
+  gate_entries: [GateEntry!]
+  community: Community
+  community_id: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type GateEntry {
+  id: ID
+  step: String!
+  fallback_code: String!
+  language: Language
+  transcript: String
+  name: String
+  last_name: String
+  phone: String
+  access_granted: Boolean
+  restart_step: Boolean
+  entry_time: DateTime
+  entry_type: GateEntryType
+  bypass_code: GateBypassCode
+  gate: Gate
+  gate_id: String!
+  resident: Resident
+  resident_id: String
+  residence: Residence
+  residence_id: String
+  visitor: Visitor
+  visitor_id: String
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+enum GateEntryType {
+  REGISTERED_VISITOR_NO_FALLBACK
+  UNREGISTERED_VISITOR_NO_FALLBACK
+  REGISTERED_VISITOR_FALLBACK
+  UNREGISTERED_VISITOR_FALLBACK
+  FALLBACK
+  BYPASS
+}
+
+enum GateBypassCode {
+  CODE1
+  CODE2
+  CODE3
+  CODE4
+}
+
+type CommunityAdmin {
+  id: ID
+  email: String!
+  password: String!
+  community: Community
+  community_id: String!
+  individual: Individual
+  individual_phone: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type Menu {
+  id: Int
+  meals: String!
+  specials: String!
+  in_use: Boolean!
+  establishment: Establishment
+  establishment_id: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+input AccountLoginInput {
+  email: String!
+  password: String!
+}
+
+type GeneralResponse {
+  success: Boolean!
+  errors: [RegularError!]
+}
+
+type CallResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  call: Call
+}
+
+input GetCallInput {
+  call_id: Int!
+}
+
+type CombinationResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  combination: ItemCombination
+}
+
+type ItemCombination {
+  combination_id: String
+  combination_name: String!
+  combination: String!
+  item_id: Int!
+  price: Float!
+}
+
+input RunAtlasCombinationAIInput {
+  language: Language!
+  sentence: String!
+  establishment_phone: String!
+}
+
+input GetCombinationInput {
+  language: Language!
+  combination_id: String!
+}
+
+type CombinationsResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  combinations: [ItemCombination!]
+}
+
+input GetCombinationsInput {
+  language: Language!
+  combination_ids: String!
+}
+
+input GetRandomCombinationInput {
+  language: Language!
+  establishment_phone: String!
+}
+
+type ZipCodeLocaleResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  zip_code_info: ZipCodeLocale
+}
+
+type ZipCodeLocale {
+  locale: Lang!
+  lat: Float!
+  long: Float!
+}
+
+"""
+Scalar type for Record<Language, string>
+"""
+scalar Lang
+
+input GetZipCodeLocaleInput {
+  zip_code: String!
+}
+
+type InAreaCheckResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  in_area: Boolean
+}
+
+input InAreaCheckInput {
+  individual_phone: String!
+  establishment_phone: String!
+}
+
+type IndividualResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  individual: Individual
+}
+
+input GetIndividualWithTokenInput {
+  phone: String!
+  update_token: String
+}
+
+input GetIndividualInput {
+  individual_phone: String!
+}
+
+type CallsResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  calls: [Call!]
+}
+
+input GetIndividualCallsInput {
+  individual_phone: String!
+}
+
+type EstablishmentResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  establishment: Establishment
+}
+
+input GetEstablishmentInput {
+  establishment_phone: String!
+}
+
+type DriversResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  drivers: [Driver!]
+}
+
+input GetEstablishmentDriversInput {
+  establishment_phone: String!
+}
+
+input GetEstablishmentCallsInput {
+  establishment_phone: String!
+}
+
+type MenuResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  menu: CompleteMenu
+}
+
+type CompleteMenu {
+  id: Int!
+  establishment_id: String!
+  meals: MenuSection!
+  specials: [Special!]!
+  in_use: Boolean
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type MenuSection {
+  items: [MealMenuItem!]!
+}
+
+type MealMenuItem {
+  name: Lang!
+  description: Lang!
+  options: [Option!]
+  addons: [Addon!]
+  keywords: Langs!
+  base_price: Float!
+  category: MenuItemCategory!
+}
+
+type Option {
+  name: Lang!
+  keywords: Langs!
+  options: [Option!]
+  addons: [MealAddon!]
+  price: Float
+}
+
+"""
+Scalar type for Record<Language, string[]>
+"""
+scalar Langs
+
+type MealAddon {
+  name: Lang!
+  keywords: Langs!
+  price: Float
+}
+
+type Addon {
+  name: Lang!
+  keywords: Langs!
+}
+
+enum MenuItemCategory {
+  MEAL
+  COMPLEMENT
+  DRINK
+  DESSERT
+  PIZZA
+  OTHER
+}
+
+type Special {
+  id: Int!
+  name: Lang!
+  description: Lang!
+  base_price: Float
+  base_keywords: Langs!
+  main: Boolean!
+  has_next_step: Boolean!
+  next_step_options: [NextStepOptions!]!
+}
+
+type NextStepOptions {
+  question: Langs!
+  items: [MenuItem!]!
+}
+
+type MenuItem {
+  name: Lang!
+  description: Lang!
+  options: [Option!]
+  addons: [Addon!]
+  keywords: Langs!
+}
+
+input GetMenuInput {
+  establishment_phone: String!
+}
+
+type OrderResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  order: Order
+}
+
+input GetOrderInput {
+  order_id: String!
+}
+
+type DriverResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  driver: Driver
+}
+
+input GetOrderDriverInput {
+  order_id: String!
+}
+
+type TransactionWithOrderResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  transaction: Transaction
+}
+
+input GetOrderWithTransactionInput {
+  token: String!
+}
+
+type TransactionsResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  transactions: [Transaction!]
+}
+
+input GetTransactionsInput {
+  limit: Int
+}
+
+type CommunityAdminResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  community_admin: CommunityAdmin
+}
+
+input CommunityAdminLoginInput {
+  email: String!
+  password: String!
+}
+
+input GetCommunityAdminInput {
+  community_admin_id: String!
+}
+
+type CommunityResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  community: Community
+}
+
+input GetCommunityInput {
+  community_id: String!
+}
+
+type GateEntryResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  gate_entry: GateEntry
+}
+
+input GetGateEntryInput {
+  gate_entry_id: String!
+}
+
+input GetLatestGateEntryFromGateInput {
+  gate_id: String!
+}
+
+type GateResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  gate: Gate
+}
+
+input GetGateInput {
+  gate_id: String!
+}
+
+type ResidenceResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  residence: Residence
+}
+
+input GetResidenceInput {
+  residence_id: String!
+}
+
+type ResidentResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  resident: Resident
+}
+
+input ResidentLoginInput {
+  email: String!
+  password: String!
+}
+
+input GetResidentInput {
+  resident_id: String!
+}
+
+type VisitorResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  visitor: Visitor
+}
+
+input GetVisitorInput {
+  visitor_id: String!
+}
+
+type SchemaResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  schema: String
+}
+
+type Mutation {
+  changeAccountPassword(data: ChangeAccountPasswordInput!): GeneralResponse!
+  forgotAccountPassword(data: ForgotAccountPasswordInput!): GeneralResponse!
+  createAccount(data: CreateAccountInput!): AccountResponse!
+  deleteAccount(data: DeleteAccountInput!): GeneralResponse!
+  createCall(data: CreateCallInput!): CallResponse!
+  updateCall(data: UpdateCallInput!): GeneralResponse!
+  completeCall(data: CompleteCallInput!): GeneralResponse!
+  deleteCall(data: DeleteCallInput!): GeneralResponse!
+  lookup(data: LookupInput!): IndividualResponse!
+  updateIndividual(data: UpdateIndividualInput!): GeneralResponse!
+  updateIndividualUpdateToken(
+    data: UpdateIndividualUpdateTokenInput!
+  ): IndividualResponse!
+  updateIndividualAddress(data: UpdateIndividualAddressInput!): GeneralResponse!
+  resetIndividual(data: ResetIndividualInput!): GeneralResponse!
+  deleteIndividual(data: DeleteIndividualInput!): GeneralResponse!
+  createEstablishment(data: CreateEstablishmentInput!): EstablishmentResponse!
+  updateEstablishment(data: UpdateEstablishmentInput!): GeneralResponse!
+  panic(data: PanicInput!): GeneralResponse!
+  unpanic(data: UnpanicInput!): GeneralResponse!
+  deleteEstablishment(data: DeleteEstablishmentInput!): GeneralResponse!
+  createMenu(data: CreateMenuInput!): GeneralResponse!
+  updateMenu(data: UpdateMenuInput!): GeneralResponse!
+  deleteMenu(data: DeleteMenuInput!): GeneralResponse!
+  storeMenu(data: StoreMenuInput!): GeneralResponse!
+  createOrder(data: CreateOrderInput!): OrderResponse!
+  updateOrder(data: UpdateOrderInput!): GeneralResponse!
+  deleteOrder(data: DeleteOrderInput!): GeneralResponse!
+  updateOrderStatus(data: UpdateOrderStatusInput!): GeneralResponse!
+  confirmOrder(data: ConfirmOrderInput!): GeneralResponse!
+  createTransaction(data: CreateTransactionInput!): TransactionResponse!
+  createStripeMealTransaction(
+    data: CreateStripeMealTransactionInput!
+  ): StripeTransactionResponse!
+  createPaypalMealTransaction(
+    data: CreatePaypalMealTransactionInput!
+  ): PaypalTransactionResponse!
+  createCommunityAdmin(
+    data: CreateCommunityAdminInput!
+  ): CommunityAdminResponse!
+  changeCommunityAdminPassword(
+    data: ChangeCommunityAdminPasswordInput!
+  ): GeneralResponse!
+  forgotCommunityAdminPassword(
+    data: ForgotCommunityAdminPasswordInput!
+  ): GeneralResponse!
+  deleteCommunityAdmin(data: DeleteCommunityAdminInput!): GeneralResponse!
+  createCommunity(data: CreateCommunityInput!): CommunityResponse!
+  updateCommunity(data: UpdateCommunityInput!): GeneralResponse!
+  deleteCommunity(data: DeleteCommunityInput!): GeneralResponse!
+  createGateEntry(data: CreateGateEntryInput!): GateEntryResponse!
+  deleteGateEntry(data: DeleteGateEntryInput!): GeneralResponse!
+  updateGateEntryTranscript(
+    data: UpdateGateEntryTranscriptInput!
+  ): GeneralResponse!
+  useGateEntryFallback(data: UseGateEntryFallbackInput!): GeneralResponse!
+  useGateEntryBypass(data: UseGateEntryBypassInput!): GeneralResponse!
+  grantAccess(data: GranAccessInput!): GeneralResponse!
+  denyAccess(data: DenyAccessInput!): GeneralResponse!
+  updateGateEntryStep(data: UpdateGateEntrySteptInput!): GeneralResponse!
+  resetGateEntryStep(data: ResetGateEntryStepInput!): GeneralResponse!
+  unresetGateEntryStep(data: UnresetGateEntryStepInput!): GeneralResponse!
+  createGate(data: CreateGateInput!): GateResponse!
+  updateGate(data: UpdateGateInput!): GeneralResponse!
+  addLanguageToGate(data: AddLanguageToGateInput!): GeneralResponse!
+  removeLanguageFromGate(data: RemoveLanguageFromGateInput!): GeneralResponse!
+  activateGate(data: ActivateGateInput!): GeneralResponse!
+  deactivateGate(data: DeactivateGateInput!): GeneralResponse!
+  activateGateLicense(data: ActivateGateLicenseInput!): GeneralResponse!
+  deactivateGateLicense(data: DeactivateGateLicenseInput!): GeneralResponse!
+  deleteGate(data: DeleteGateInput!): GeneralResponse!
+  createResidence(data: CreateResidenceInput!): ResidenceResponse!
+  updateResidence(data: UpdateResidenceInput!): GeneralResponse!
+  addResidentToResidence(data: AddResidentToResidenceInput!): GeneralResponse!
+  removeResidentFromResidence(
+    data: RemoveResidentFromResidenceInput!
+  ): GeneralResponse!
+  addVisitorToResidence(data: AddVisitorToResidentInput!): GeneralResponse!
+  removeVisitorFromResidence(
+    data: RemoveVisitorFromResidentInput!
+  ): GeneralResponse!
+  deleteResidence(data: DeleteResidenceInput!): GeneralResponse!
+  createResident(data: CreateResidentInput!): ResidentResponse!
+  changeResidentPassword(data: ChangeResidentPasswordInput!): GeneralResponse!
+  forgotResidentPassword(data: ForgotResidentPasswordInput!): GeneralResponse!
+  deleteResident(data: DeleteResidentInput!): GeneralResponse!
+  createVisitor(data: CreateVisitorInput!): VisitorResponse!
+  deleteVisitor(data: DeleteVisitorInput!): GeneralResponse!
+  addNicknameToVisitor(data: AddNicknameToVisitorInput!): GeneralResponse!
+  removeNicknameFromVisitor(
+    data: RemoveNicknameFromVisitorInput!
+  ): GeneralResponse!
+  updateVisitor(data: UpdateVisitorInput!): GeneralResponse!
+  nukeDB: GeneralResponse!
+}
+
+input ChangeAccountPasswordInput {
+  token: String!
+  password: String!
+}
+
+input ForgotAccountPasswordInput {
+  email: String!
+}
+
+input CreateAccountInput {
+  name: String!
+  last_name: String!
+  email: String!
+  password: String!
+  address: String!
+  city: String!
+  state: String!
+  country: String!
+  zip_code: String!
+  business_details: String!
+  account_type: String!
+}
+
+input DeleteAccountInput {
+  account_id: String!
+}
+
+input CreateCallInput {
+  language: Language!
+  step: String!
+  establishment_phone: String!
+  caller_phone: String!
+}
+
+input UpdateCallInput {
+  call_id: Int!
+  language: Language
+  step: String
+}
+
+input CompleteCallInput {
+  call_id: Int!
+}
+
+input DeleteCallInput {
+  call_id: Int!
+}
+
+input LookupInput {
+  individual_phone: String!
+}
+
+input UpdateIndividualInput {
+  phone: String!
+  name: String
+  last_name: String
+  address: String
+  state: String
+  city: String
+  zip_code: String
+  language: Language
+}
+
+input UpdateIndividualUpdateTokenInput {
+  phone: String!
+}
+
+input UpdateIndividualAddressInput {
+  phone: String!
+  update_token: String
+  name: String
+  last_name: String
+  address: String
+  state: String
+  city: String
+  country: String
+  zip_code: String
+}
+
+input ResetIndividualInput {
+  phone: String!
+  reset_name: Boolean
+  reset_last_name: Boolean
+  reset_address: Boolean
+  reset_zip_code: Boolean
+  reset_language: Boolean
+}
+
+input DeleteIndividualInput {
+  individual_phone: String!
+}
+
+input CreateEstablishmentInput {
+  account_id: String!
+  phone: String!
+  name: String!
+  address: String!
+  city: String!
+  state: String!
+  country: String!
+  zip_code: String!
+  longitude: Float!
+  latitude: Float!
+  market: Market!
+  subscription: Subscription!
+  active: Boolean!
+  languages: [Language!]!
+  pos: PoS
+  paid: Boolean
+  radius: Float
+  fallback_phone: String
+  logo: String
+  stripe_key: String
+  paypal_secret: String
+  paypal_client: String
+}
+
+input UpdateEstablishmentInput {
+  establishment_phone: String!
+  phone: String
+  name: String
+  address: String
+  city: String
+  state: String
+  country: String
+  zip_code: String
+  tax_rate: Float
+  longitude: Float
+  latitude: Float
+  pos: PoS
+  market: String
+  subscription: String
+  paid: Boolean
+  active: Boolean
+  languages: [Language!]
+  radius: Float
+  fallback_phone: String
+  logo: String
+  stripe_key: String
+  paypal_secret: String
+  paypal_client: String
+}
+
+input PanicInput {
+  establishment_phone: String!
+}
+
+input UnpanicInput {
+  establishment_phone: String!
+}
+
+input DeleteEstablishmentInput {
+  establishment_phone: String!
+}
+
+input CreateMenuInput {
+  menu: MenuScalar!
+  establishment_phone: String!
+}
+
+"""
+Scalar type for Menu
+"""
+scalar MenuScalar
+
+input UpdateMenuInput {
+  menu: MenuScalar!
+}
+
+input DeleteMenuInput {
+  menu_id: Int!
+}
+
+input StoreMenuInput {
+  establishment_phone: String!
+}
+
+input CreateOrderInput {
+  languages: Language!
+  combination_ids: String!
+  establishment_phone: String!
+  call_id: Int!
+}
+
+input UpdateOrderInput {
+  order_id: String!
+  price: Float
+  order: String
+  combination_id: String
+}
+
+input DeleteOrderInput {
+  order_id: String!
+}
+
+input UpdateOrderStatusInput {
+  order_id: String!
+  status: Status!
+}
+
+input ConfirmOrderInput {
+  order_id: String!
+  confirmation_code: String!
+}
+
+type TransactionResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  transaction: Transaction
+}
+
+input CreateTransactionInput {
+  order_id: String!
+  establishment_phone: String!
+  token: String!
+  status: String!
+}
+
+type StripeTransactionResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  transaction: StripeTransaction
+}
+
+type StripeTransaction {
+  token: String!
+  status: String!
+}
+
+input CreateStripeMealTransactionInput {
+  order_id: String!
+  number: String!
+  exp_month: Int!
+  exp_year: Int!
+  cvc: String!
+  establishment_phone: String!
+  language: Language!
+  application_fee_amount: Float
+  connected_account_id: String
+}
+
+type PaypalTransactionResponse {
+  success: Boolean!
+  errors: [RegularError!]
+  transaction: PaypalTransaction
+}
+
+type PaypalTransaction {
+  token: String!
+  status: String!
+  links: String!
+  created_at: DateTime!
+  order_id: String!
+  updated_at: DateTime!
+  processor: PaymentProcessor!
+}
+
+input CreatePaypalMealTransactionInput {
+  order_id: String!
+  establishment_phone: String!
+  language: Language!
+}
+
+input CreateCommunityAdminInput {
+  community_id: String!
+  individual_phone: String!
+  email: String!
+  password: String!
+  name: String!
+  address: String!
+  state: String!
+  city: String!
+  country: String!
+  zip_code: String!
+}
+
+input ChangeCommunityAdminPasswordInput {
+  token: String!
+  password: String!
+}
+
+input ForgotCommunityAdminPasswordInput {
+  email: String!
+}
+
+input DeleteCommunityAdminInput {
+  community_admin_id: String!
+}
+
+input CreateCommunityInput {
+  account_id: String!
+  name: String!
+  address: String!
+  state: String!
+  city: String!
+  country: String!
+  zip_code: String!
+}
+
+input UpdateCommunityInput {
+  community_id: String!
+  name: String
+  address: String
+  state: String
+  city: String
+  country: String
+  zip_code: String
+}
+
+input DeleteCommunityInput {
+  community_id: String!
+}
+
+input CreateGateEntryInput {
+  gate_id: String!
+  step: String!
+  language: Language!
+}
+
+input DeleteGateEntryInput {
+  gate_entry_id: String!
+}
+
+input UpdateGateEntryTranscriptInput {
+  gate_entry_id: String!
+  transcript: String!
+}
+
+input UseGateEntryFallbackInput {
+  gate_entry_id: String!
+  resident_id: String!
+  residence_id: String!
+  fallback_code: String!
+  visitor_id: String
+  name: String
+  last_name: String
+  phone: String
+}
+
+input UseGateEntryBypassInput {
+  gate_entry_id: String!
+  bypass_code: GateBypassCode!
+}
+
+input GranAccessInput {
+  gate_entry_id: String!
+}
+
+input DenyAccessInput {
+  gate_entry_id: String!
+}
+
+input UpdateGateEntrySteptInput {
+  gate_entry_id: String!
+  step: String!
+  resident_id: String
+  residence_id: String
+  visitor_id: String
+}
+
+input ResetGateEntryStepInput {
+  gate_entry_id: String!
+}
+
+input UnresetGateEntryStepInput {
+  gate_entry_id: String!
+}
+
+input CreateGateInput {
+  community_id: String!
+  name: String!
+  languages: [Language!]!
+}
+
+input UpdateGateInput {
+  gate_id: String!
+  name: String
+  languages: [String!]
+}
+
+input AddLanguageToGateInput {
+  gate_id: String!
+  language: Language!
+}
+
+input RemoveLanguageFromGateInput {
+  gate_id: String!
+  language: Language!
+}
+
+input ActivateGateInput {
+  gate_id: String!
+}
+
+input DeactivateGateInput {
+  gate_id: String!
+}
+
+input ActivateGateLicenseInput {
+  gate_id: String!
+}
+
+input DeactivateGateLicenseInput {
+  gate_id: String!
+}
+
+input DeleteGateInput {
+  gate_id: String!
+}
+
+input CreateResidenceInput {
+  community_id: String!
+  address: String!
+  residence_number: String!
+  nicknames: [String!]
+}
+
+input UpdateResidenceInput {
+  residence_id: String!
+  name: String
+  address: String
+}
+
+input AddResidentToResidenceInput {
+  residence_id: String!
+  resident_id: String!
+}
+
+input RemoveResidentFromResidenceInput {
+  residence_id: String!
+  resident_id: String!
+}
+
+input AddVisitorToResidentInput {
+  residence_id: String!
+  visitor_id: String!
+}
+
+input RemoveVisitorFromResidentInput {
+  residence_id: String!
+  visitor_id: String!
+}
+
+input DeleteResidenceInput {
+  residence_id: String!
+}
+
+input CreateResidentInput {
+  community_id: String!
+  residence_id: String!
+  individual_phone: String!
+  email: String!
+  password: String!
+  name: String!
+  last_name: String!
+}
+
+input ChangeResidentPasswordInput {
+  token: String!
+  password: String!
+}
+
+input ForgotResidentPasswordInput {
+  email: String!
+}
+
+input DeleteResidentInput {
+  resident_id: String!
+}
+
+input CreateVisitorInput {
+  resident_id: String!
+  individual_phone: String!
+  name: String!
+  last_name: String!
+  nicknames: [String!]
+  vehicle_make: String
+  vehicle_model: String
+  vehicle_year: String
+  license_plate: String
+}
+
+input DeleteVisitorInput {
+  visitor_id: String!
+}
+
+input AddNicknameToVisitorInput {
+  visitor_id: String!
+  nickname: String!
+}
+
+input RemoveNicknameFromVisitorInput {
+  visitor_id: String!
+  nickname: String!
+}
+
+input UpdateVisitorInput {
+  visitor_id: String!
+  individual_phone: String
+  name: String
+  last_name: String
+  vehicle_make: String
+  vehicle_model: String
+  vehicle_year: String
+  license_plate: String
+}

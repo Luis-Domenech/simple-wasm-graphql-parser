@@ -10,7 +10,7 @@
     "compile-dev": "cd simple-wasm-graphql-parser-src && yarn compile-dev",
     "compile-prod": "cd simple-wasm-graphql-parser-src && yarn compile-prod",
     "test": "cd backend-test && yarn test",
-    "test-dev": "cd simple-wasm-graphql-parser-src && yarn rm-pkg-dir && yarn compile-prod && cd ../backend-test && yarn test",
+    "test-dev": "cd simple-wasm-graphql-parser-src && yarn rm-pkg-dir && yarn compile-prod && cd ../backend-test && yarn upgrade simple-wasm-graphql-parser && yarn test",
     "deploy": "cd simple-wasm-graphql-parser-src && yarn deploy"
   }
 }
