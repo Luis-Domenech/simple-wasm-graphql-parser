@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/Luis-Domenech/simple-wasm-graphql-parser/compare/v1.0.4...v1.0.5) (2022-08-13)
+
+
+### Bug Fixes
+
+* **parser:** Fixed same issue on process_fields ([f08dd50](https://github.com/Luis-Domenech/simple-wasm-graphql-parser/commit/f08dd5062e24f80263a4d388acabb12dde11f10c))
+
 ## [1.0.4](https://github.com/Luis-Domenech/simple-wasm-graphql-parser/compare/v1.0.3...v1.0.4) (2022-08-13)
 
 
