@@ -467,51 +467,60 @@ pub fn process_fields(schema_data: &mut SchemaData, _config: &Config) {
 pub fn par_process_fields(schema_data: &mut SchemaData, _config: &Config) {
     let enums: Vec<String> = if schema_data.enum_types.is_some() { schema_data.enum_types.as_ref().unwrap().par_iter().map(|e| e.name.clone()).collect() } else { vec![] };
     let scalars: Vec<String> = if schema_data.scalar_types.is_some() { schema_data.scalar_types.as_ref().unwrap().par_iter().map(|s| s.name.clone()).collect() } else { vec![] };
+    let unions: Vec<String> = if schema_data.union_types.is_some() { schema_data.union_types.as_ref().unwrap().par_iter().map(|u| u.name.clone()).collect() } else { vec![] };
 
     schema_data.input_object_types.par_iter_mut().flatten().for_each(|input_object_type| {
         input_object_type.fields.par_iter_mut().for_each(|field| {
-            if enums.par_iter().any(|e| *e == field.field_type) { field.is_scalar = true; }
+            if enums.par_iter().any(|e| *e == field.field_type) { field.is_enum = true; }
             else if scalars.par_iter().any(|s| *s == field.field_type) { field.is_scalar = true; }
+            else if unions.par_iter().any(|u| *u == field.field_type) { field.is_union = true; }
 
             field.arguments.par_iter_mut().flatten().for_each(|argument| {
-                if enums.par_iter().any(|e| *e == argument.argument_type) { argument.is_scalar = true; }
+                if enums.par_iter().any(|e| *e == argument.argument_type) { argument.is_enum = true; }
                 else if scalars.par_iter().any(|s| *s == argument.argument_type) { argument.is_scalar = true; }
+                else if unions.par_iter().any(|u| *u == argument.argument_type) { argument.is_union = true; }
             })
         })
     });
 
     schema_data.interface_types.par_iter_mut().flatten().for_each(|interface_type| {
         interface_type.fields.par_iter_mut().for_each(|field| {
-            if enums.par_iter().any(|e| *e == field.field_type) { field.is_scalar = true; }
+            if enums.par_iter().any(|e| *e == field.field_type) { field.is_enum = true; }
             else if scalars.par_iter().any(|s| *s == field.field_type) { field.is_scalar = true; }
+            else if unions.par_iter().any(|u| *u == field.field_type) { field.is_union = true; }
 
             field.arguments.par_iter_mut().flatten().for_each(|argument| {
-                if enums.par_iter().any(|e| *e == argument.argument_type) { argument.is_scalar = true; }
+                if enums.par_iter().any(|e| *e == argument.argument_type) { argument.is_enum = true; }
                 else if scalars.par_iter().any(|s| *s == argument.argument_type) { argument.is_scalar = true; }
+                else if unions.par_iter().any(|u| *u == argument.argument_type) { argument.is_union = true; }
             })
         })
     });
     
     schema_data.object_types.par_iter_mut().flatten().for_each(|object_type| {
         object_type.fields.par_iter_mut().for_each(|field| {
-            if enums.par_iter().any(|e| *e == field.field_type) { field.is_scalar = true; }
+            if enums.par_iter().any(|e| *e == field.field_type) { field.is_enum = true; }
             else if scalars.par_iter().any(|s| *s == field.field_type) { field.is_scalar = true; }
+            else if unions.par_iter().any(|u| *u == field.field_type) { field.is_union = true; }
 
             field.arguments.par_iter_mut().flatten().for_each(|argument| {
-                if enums.par_iter().any(|e| *e == argument.argument_type) { argument.is_scalar = true; }
+                if enums.par_iter().any(|e| *e == argument.argument_type) { argument.is_enum = true; }
                 else if scalars.par_iter().any(|s| *s == argument.argument_type) { argument.is_scalar = true; }
+                else if unions.par_iter().any(|u| *u == argument.argument_type) { argument.is_union = true; }
             })
         })
     });
 
     schema_data.operation_types.par_iter_mut().flatten().for_each(|operation_type| {
         operation_type.fields.par_iter_mut().for_each(|field| {
-            if enums.par_iter().any(|e| *e == field.field_type) { field.is_scalar = true; }
+            if enums.par_iter().any(|e| *e == field.field_type) { field.is_enum = true; }
             else if scalars.par_iter().any(|s| *s == field.field_type) { field.is_scalar = true; }
+            else if unions.par_iter().any(|u| *u == field.field_type) { field.is_union = true; }
 
             field.arguments.par_iter_mut().flatten().for_each(|argument| {
-                if enums.par_iter().any(|e| *e == argument.argument_type) { argument.is_scalar = true; }
+                if enums.par_iter().any(|e| *e == argument.argument_type) { argument.is_enum = true; }
                 else if scalars.par_iter().any(|s| *s == argument.argument_type) { argument.is_scalar = true; }
+                else if unions.par_iter().any(|u| *u == argument.argument_type) { argument.is_union = true; }
             })
         })
     });
